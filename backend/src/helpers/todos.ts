@@ -25,7 +25,7 @@ export function createTodo(
     todoId,
     createdAt: new Date().getTime().toString(),
     done: false,
-    attachmentUrl: `https://${s3BucketName}.s3.amazonaws.com/${todoId}`,
+    attachmentUrl: `https://${s3BucketName}.s3.us-east-2.amazonaws.com/${todoId}`,
     ...createTodoRequest
   })
 }
