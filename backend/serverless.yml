@@ -1,7 +1,5 @@
 # # TODO: Change the name of the org
 # # Updated By Sayed Atef
-org: SayedAtef
-app: serverless-todo-app
 service:
   name: serverless-todo-app
 
@@ -45,10 +43,10 @@ custom:
       models:
         - name: CreateTodoRequest
           contentType: 'application/json'
-          schema: ${file(models/TodoItem.json)}
+          schema: ${file(models/create-todo-model.json)}
         - name: UpdateTodoRequest
           contentType: 'application/json'
-          schema: ${file(models/TodoUpdate.json)}
+          schema: ${file(models/update-todo-model.json)}
 
 functions:
   Auth:
