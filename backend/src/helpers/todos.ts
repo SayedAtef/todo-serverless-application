@@ -4,21 +4,32 @@ import { TodoUpdate } from '../models/TodoUpdate'
 import { CreateTodoRequest } from '../requests/CreateTodoRequest'
 import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
 import * as uuid from 'uuid'
+import { getUserId } from '../lambda/utils'
 import { parseUserId } from '../auth/utils'
+import { APIGatewayProxyEvent } from 'aws-lambda'
 
 const s3BucketName = process.env.S3_BUCKET_NAME
 const todosAccess = new TodosAccess()
 
-export async function getTodos(jwtToken: string): Promise<TodoItem[]> {
-  const userId = parseUserId(jwtToken)
+// export async function getTodos(jwtToken: string): Promise<TodoItem[]> {
+//   const userId = parseUserId(jwtToken)
+//   return todosAccess.getTodos(userId)
+// }
+
+export async function getTodos(
+  event: APIGatewayProxyEvent
+): Promise<TodoItem[]> {
+  const userId = getUserId(event)
+  console.log(userId)
   return todosAccess.getTodos(userId)
 }
 
 export function createTodo(
   createTodoRequest: CreateTodoRequest,
-  id: string
+  jwtToken: string
 ): Promise<TodoItem> {
-  const userId = id
+  const userId = parseUserId(jwtToken)
+  console.log(userId)
   const todoId = uuid.v4()
   return todosAccess.createTodo({
     userId,
